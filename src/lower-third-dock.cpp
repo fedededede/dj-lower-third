@@ -6,7 +6,7 @@
 #include <QScrollArea>
 #include <QFormLayout>
 #include <QGroupBox>
-#include <QLabel>
+#include <QLabel>            
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QFrame>
