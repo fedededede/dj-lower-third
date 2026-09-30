@@ -3,6 +3,7 @@
 #include <obs-frontend-api.h>
 #include <obs-data.h>
 #include <QVBoxLayout>
+#include <QScrollArea>
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QLabel>
@@ -57,7 +58,7 @@ static std::vector<std::string> textSources()
 
 LowerThirdDock::LowerThirdDock(QWidget *p) : QWidget(p)
 {
-    setMinimumWidth(340);
+    setMinimumWidth(260);
     buildUi();
     clock.start();
     loadSettings();
@@ -82,7 +83,18 @@ void LowerThirdDock::setupLayer(Layer &l, const QString &, const QString &txt, i
 
 void LowerThirdDock::buildUi()
 {
-    auto *root = new QVBoxLayout(this);
+    // Everything lives inside a scroll area so the dock works at any height.
+    auto *outer = new QVBoxLayout(this);
+    outer->setContentsMargins(0, 0, 0, 0);
+    auto *scroll = new QScrollArea(this);
+    scroll->setWidgetResizable(true);
+    scroll->setFrameShape(QFrame::NoFrame);
+    scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    auto *content = new QWidget;
+    scroll->setWidget(content);
+    outer->addWidget(scroll);
+
+    auto *root = new QVBoxLayout(content);
     root->setContentsMargins(8, 8, 8, 8);
     root->setSpacing(6);
 
